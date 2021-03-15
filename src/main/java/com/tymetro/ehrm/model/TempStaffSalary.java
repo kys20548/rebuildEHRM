@@ -5,10 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
-@Getter
-@Setter
-@EqualsAndHashCode
-@Entity
+@Data
+@Entity(name = "TEMP_TEMPSTAFF_SALARY")
 public class TempStaffSalary {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
