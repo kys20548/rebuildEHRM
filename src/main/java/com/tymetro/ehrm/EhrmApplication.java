@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories
 public class EhrmApplication implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(EhrmApplication.class);
 
