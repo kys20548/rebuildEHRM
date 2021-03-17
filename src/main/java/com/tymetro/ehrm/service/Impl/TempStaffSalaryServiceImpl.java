@@ -4,18 +4,20 @@ import com.tymetro.ehrm.model.TempStaffSalary;
 import com.tymetro.ehrm.repository.TempStaffSalaryRepository;
 import com.tymetro.ehrm.service.TempStaffSalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class TempStaffSalaryServiceImpl implements TempStaffSalaryService<TempStaffSalary,Long> {
+@Service
+public class TempStaffSalaryServiceImpl implements TempStaffSalaryService<TempStaffSalary, Long> {
 
     @Autowired
     TempStaffSalaryRepository tempStaffSalaryRepository;
 
     @Override
     public List<TempStaffSalary> findAll() {
-        return null;
+        return tempStaffSalaryRepository.findAll();
     }
 
     @Override

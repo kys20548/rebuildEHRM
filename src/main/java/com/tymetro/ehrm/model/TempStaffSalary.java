@@ -6,11 +6,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Entity(name = "TEMP_TEMPSTAFF_SALARY")
+@Entity(name = "TEMP_STAFF_SALARY")
 public class TempStaffSalary {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int seq;
     private String salaryYM;
     private String unitName;
     private String empType;
@@ -36,16 +36,15 @@ public class TempStaffSalary {
     private Integer retireInsuComDiff;
     private Integer otherIn;
     private Integer otherOut;
-    private String onBoard;
-    private String resignation;
+    private String onboardDate;
+    private String resignationDate;
     private String laborApplication;
     private String healthApplication;
-    private Double preHours;
-    private Double workOverTime1;
-    private Double workOverTime2;
-    private Double workOverTime3;
-    private Double workOverTime4;
-    private Double workOverTime5;
+    private Double workOvertime1;
+    private Double workOvertime2;
+    private Double workOvertime3;
+    private Double workOvertime4;
+    private Double workOvertime5;
     private String remark;
     private Integer calSalary;
     private Integer calLaborInsuSelf;
@@ -55,7 +54,7 @@ public class TempStaffSalary {
     private Integer calHealthInsuCom;
     private Integer calRetireInsuSelf;
     private Integer calRetireInsuCom;
-    private Integer calPaymentFund;
+    private Integer calRepaymentFund;
     private Integer calWelfare;
     private Date updateDate;
     private String updateUser;

@@ -388,7 +388,7 @@ public class TempStaffInsuranceController {
             TempStaffInsurance tsi = new TempStaffInsurance();
             // 薪資年月
             try {
-                tsi.setInsuranceYYMM((Integer.valueOf(((String) list.get(0)).substring(0, 3)) + 1911)+ ((String) list.get(0)).substring(4));
+                tsi.setInsuranceYyMm((Integer.valueOf(((String) list.get(0)).substring(0, 3)) + 1911)+ ((String) list.get(0)).substring(4));
                 tsi.setEmpNo((String) list.get(1));// 員工編號
                 tsi.setEmpName((String) list.get(2));// 員工姓名
                 tsi.setHourRate("".equals(list.get(3))==true?0:(Double)list.get(3));
@@ -417,21 +417,21 @@ public class TempStaffInsuranceController {
 
             for(int laborinsu:laborRange) {
                 if(tsi.getSalary()<=laborinsu) {
-                    tsi.setLaborInsu(laborinsu);
+                    tsi.setLaborInsurance(laborinsu);
                     break;
                 }
             }
 
             for(int laborinsu:healthRange) {
                 if(tsi.getSalary()<=laborinsu) {
-                    tsi.setHealthInsu(laborinsu);
+                    tsi.setHealthInsurance(laborinsu);
                     break;
                 }
             }
 
             for(int laborinsu:retireRange) {
                 if(tsi.getSalary()<=laborinsu) {
-                    tsi.setRetireInsu(laborinsu);
+                    tsi.setRetireInsurance(laborinsu);
                     break;
                 }
             }
@@ -455,14 +455,14 @@ public class TempStaffInsuranceController {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 TempStaffInsurance tsi = list.get(i);
-                ps.setString(1, tsi.getInsuranceYYMM());
+                ps.setString(1, tsi.getInsuranceYyMm());
                 ps.setString(2, tsi.getEmpNo());
                 ps.setDouble(3, tsi.getHourRate());
                 ps.setDouble(4, tsi.getHours());
                 ps.setInt(5, tsi.getSalary());
-                ps.setDouble(6, tsi.getLaborInsu());
-                ps.setDouble(7, tsi.getHealthInsu());
-                ps.setDouble(8, tsi.getRetireInsu());
+                ps.setDouble(6, tsi.getLaborInsurance());
+                ps.setDouble(7, tsi.getHealthInsurance());
+                ps.setDouble(8, tsi.getRetireInsurance());
                 ps.setTimestamp(9, new Timestamp(tsi.getUpdateDate().getTime()));
                 ps.setString(10, tsi.getUpdateUser());
                 ps.setString(11, tsi.getEmpName());
@@ -486,7 +486,7 @@ public class TempStaffInsuranceController {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 TempStaffInsurance tsi = list.get(i);
-                ps.setString(1, tsi.getInsuranceYYMM());
+                ps.setString(1, tsi.getInsuranceYyMm());
                 ps.setString(2, tsi.getEmpNo());
             }
 

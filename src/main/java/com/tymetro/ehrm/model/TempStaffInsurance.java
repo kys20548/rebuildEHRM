@@ -6,20 +6,21 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Entity(name = "TEMP_TEMPSTAFF_INSURANCE")
+@Entity(name = "TEMP_STAFF_INSURANCE")
 public class TempStaffInsurance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int seq;
     private String empNo;
     private String empName;
-    private String insuranceYYMM;
+    @Column(name = "INSURANCE_YYMM")
+    private String insuranceYyMm;
     private Double hourRate;
     private Double hours;
     private Integer salary;
-    private Integer laborInsu;
-    private Integer healthInsu;
-    private Integer retireInsu;
+    private Integer laborInsurance;
+    private Integer healthInsurance;
+    private Integer retireInsurance;
     private Date updateDate;
     private String updateUser;
 

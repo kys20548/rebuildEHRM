@@ -133,15 +133,15 @@ public class TempStaffController {
             tss.setRetireInsuComDiff(Integer.parseInt(request.getParameter("retireInsuComDiff")));
             tss.setOtherIn(Integer.parseInt(request.getParameter("otherIn")));
             tss.setOtherOut(Integer.parseInt(request.getParameter("otherOut")));
-            tss.setOnBoard((String) request.getParameter("onBoard"));
-            tss.setResignation((String) request.getParameter("resignation"));
+            tss.setOnboardDate((String) request.getParameter("onBoard"));
+            tss.setResignationDate((String) request.getParameter("resignationDate"));
             tss.setLaborApplication(request.getParameter("laborApplication")==null?"N":(String)request.getParameter("laborApplication"));
             tss.setHealthApplication(request.getParameter("healthApplication")==null?"N":(String)request.getParameter("healthApplication"));
-            tss.setWorkOverTime1(Double.parseDouble( request.getParameter("workOverTime1")));
-            tss.setWorkOverTime2(Double.parseDouble( request.getParameter("workOverTime2")));
-            tss.setWorkOverTime3(Double.parseDouble( request.getParameter("workOverTime3")));
-            tss.setWorkOverTime4(Double.parseDouble( request.getParameter("workOverTime4")));
-            tss.setWorkOverTime5(Double.parseDouble( request.getParameter("workOverTime5")));
+            tss.setWorkOvertime1(Double.parseDouble( request.getParameter("workOvertime1")));
+            tss.setWorkOvertime2(Double.parseDouble( request.getParameter("workOvertime2")));
+            tss.setWorkOvertime3(Double.parseDouble( request.getParameter("workOvertime3")));
+            tss.setWorkOvertime4(Double.parseDouble( request.getParameter("workOvertime4")));
+            tss.setWorkOvertime5(Double.parseDouble( request.getParameter("workOvertime5")));
             tss.setRemark((String) request.getParameter("remark"));
             List<Map<String, Object>> empNoInsu = null;
             try {
@@ -373,15 +373,15 @@ public class TempStaffController {
                 tss.setRetireInsuComDiff(((Double) list.get(22)).intValue());// 勞退公司差額
                 tss.setOtherIn(((Double) list.get(23)).intValue());// 其他應領
                 tss.setOtherOut(((Double) list.get(24)).intValue());// 其他應扣
-                tss.setOnBoard((String)list.get(25));//到職日
-                tss.setResignation((String)list.get(26));//離職日
+                tss.setOnboardDate((String)list.get(25));//到職日
+                tss.setResignationDate((String)list.get(26));//離職日
                 tss.setLaborApplication((String)list.get(27));//是否加保勞保
                 tss.setHealthApplication((String)list.get(28));//是否加保健保
-                tss.setWorkOverTime1("".equals(list.get(29))==true?0:(Double)list.get(29));//加班費率1.3334
-                tss.setWorkOverTime2("".equals(list.get(30))==true?0:(Double)list.get(30));//加班費率1.6667
-                tss.setWorkOverTime3("".equals(list.get(31))==true?0:(Double)list.get(31));//加班費率2.6667
-                tss.setWorkOverTime4("".equals(list.get(32))==true?0:(Double)list.get(32));//加班費率2
-                tss.setWorkOverTime5("".equals(list.get(33))==true?0:(Double)list.get(33));//加班費率1
+                tss.setWorkOvertime1("".equals(list.get(29))==true?0:(Double)list.get(29));//加班費率1.3334
+                tss.setWorkOvertime2("".equals(list.get(30))==true?0:(Double)list.get(30));//加班費率1.6667
+                tss.setWorkOvertime3("".equals(list.get(31))==true?0:(Double)list.get(31));//加班費率2.6667
+                tss.setWorkOvertime4("".equals(list.get(32))==true?0:(Double)list.get(32));//加班費率2
+                tss.setWorkOvertime5("".equals(list.get(33))==true?0:(Double)list.get(33));//加班費率1
                 tss.setRemark("".equals(list.get(34))?"":list.get(34) instanceof Double?((Double)list.get(34)).toString():(String)list.get(34));//備註
             } catch (Exception e) {
                 throw new Exception((String)list.get(3)+"  資料有問題，請檢查是否有上傳該月份保額，或是上傳資料有誤");
@@ -428,13 +428,13 @@ public class TempStaffController {
 
         //勞保、勞退計算加保日期(計算破月用)
         Double days=30.0;
-        if(!tss.getOnBoard().isEmpty()) {//若有到職日期 108/05/16
-            days=30-Integer.parseInt(tss.getOnBoard().substring(7))+1d;
+        if(!tss.getOnboardDate().isEmpty()) {//若有到職日期 108/05/16
+            days=30-Integer.parseInt(tss.getOnboardDate().substring(7))+1d;
             if(days==0) {//如果是31號的話 還是算一天
                 days=1.0;
             }
-        }else if(!tss.getResignation().isEmpty()) {//若有離職日期
-            days=Double.parseDouble(tss.getResignation().substring(7));
+        }else if(!tss.getResignationDate().isEmpty()) {//若有離職日期
+            days=Double.parseDouble(tss.getResignationDate().substring(7));
         }
 
         bd = new BigDecimal(((tss.getLaborInsu() * 0.105 * 0.2* tss.getLaborInsuMem()/30.0*days)));
@@ -461,7 +461,7 @@ public class TempStaffController {
         bd = bd.setScale(0, BigDecimal.ROUND_HALF_UP);
         tss.setCalLaborInsuComInjury(bd.intValue());// 勞保公司負擔職業災害
 
-        if(!tss.getResignation().isEmpty()) {//若有離職日則當月不用保健保
+        if(!tss.getResignationDate().isEmpty()) {//若有離職日則當月不用保健保
             bd = BigDecimal.ZERO;
         }else {
             bd = new BigDecimal(tss.getHealthInsu() * 0.0517 * 0.3 * tss.getHealthInsuMem());
@@ -469,7 +469,7 @@ public class TempStaffController {
         bd = bd.setScale(0, BigDecimal.ROUND_HALF_UP);
         tss.setCalHealthInsuSelf(bd.intValue());// 健保個人負擔
 
-        if(!tss.getResignation().isEmpty()) {//若有離職日則當月不用保健保
+        if(!tss.getResignationDate().isEmpty()) {//若有離職日則當月不用保健保
             bd = BigDecimal.ZERO;
         }else {
             bd = new BigDecimal(tss.getHealthInsu() * 0.0517 * 0.6 * 1.58);
@@ -487,7 +487,7 @@ public class TempStaffController {
 
         bd = new BigDecimal(tss.getLaborInsu() * 0.00025/30.0*days);
         bd = bd.setScale(0, BigDecimal.ROUND_HALF_UP);
-        tss.setCalPaymentFund(bd.intValue());// 工資墊償
+        tss.setCalRepaymentFund(bd.intValue());// 工資墊償
 
         if ("S".equals(tss.getEmpType())) {// 福利金
             bd = new BigDecimal(tss.getCalSalary() * 0.005);
@@ -501,11 +501,11 @@ public class TempStaffController {
 
         //計算加班費
         bd = new BigDecimal(tss.getHourRate()*(
-                (tss.getWorkOverTime1()*1.3334)+
-                        (tss.getWorkOverTime2()*1.6667)+
-                        (tss.getWorkOverTime3()*2.6667)+
-                        (tss.getWorkOverTime4()*2)+
-                        (tss.getWorkOverTime5()*1)));
+                (tss.getWorkOvertime1()*1.3334)+
+                        (tss.getWorkOvertime2()*1.6667)+
+                        (tss.getWorkOvertime3()*2.6667)+
+                        (tss.getWorkOvertime4()*2)+
+                        (tss.getWorkOvertime5()*1)));
         bd = bd.setScale(0, BigDecimal.ROUND_CEILING);
         tss.setCalSalary(bd.intValue()+tss.getCalSalary());
         return tss;
@@ -562,19 +562,19 @@ public class TempStaffController {
                 ps.setInt(30, tempStaffSalary.getCalRetireInsuCom().intValue());
                 ps.setInt(31, tempStaffSalary.getCalHealthInsuSelf().intValue());
                 ps.setInt(32, tempStaffSalary.getCalHealthInsuCom().intValue());
-                ps.setInt(33, tempStaffSalary.getCalPaymentFund().intValue());
+                ps.setInt(33, tempStaffSalary.getCalRepaymentFund().intValue());
                 ps.setInt(34, tempStaffSalary.getCalWelfare().intValue());
-                ps.setString(35, tempStaffSalary.getOnBoard());
-                ps.setString(36, tempStaffSalary.getResignation());
+                ps.setString(35, tempStaffSalary.getOnboardDate());
+                ps.setString(36, tempStaffSalary.getResignationDate());
                 ps.setTimestamp(37, new Timestamp(tempStaffSalary.getUpdateDate().getTime()));
                 ps.setString(38, tempStaffSalary.getUpdateUser());
                 ps.setString(39, tempStaffSalary.getLaborApplication());
                 ps.setString(40, tempStaffSalary.getHealthApplication());
-                ps.setDouble(41, tempStaffSalary.getWorkOverTime1());
-                ps.setDouble(42, tempStaffSalary.getWorkOverTime2());
-                ps.setDouble(43, tempStaffSalary.getWorkOverTime3());
-                ps.setDouble(44, tempStaffSalary.getWorkOverTime4());
-                ps.setDouble(45, tempStaffSalary.getWorkOverTime5());
+                ps.setDouble(41, tempStaffSalary.getWorkOvertime1());
+                ps.setDouble(42, tempStaffSalary.getWorkOvertime2());
+                ps.setDouble(43, tempStaffSalary.getWorkOvertime3());
+                ps.setDouble(44, tempStaffSalary.getWorkOvertime4());
+                ps.setDouble(45, tempStaffSalary.getWorkOvertime5());
                 ps.setDouble(46, tempStaffSalary.getCalSalary());
                 ps.setString(47, tempStaffSalary.getRemark());
             }

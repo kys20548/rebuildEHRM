@@ -4,18 +4,20 @@ import com.tymetro.ehrm.model.TempStaffInsurance;
 import com.tymetro.ehrm.repository.TempStaffInsuranceRepository;
 import com.tymetro.ehrm.service.TempStaffInsuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class TempStaffInsuranceServiceImpl implements TempStaffInsuranceService<TempStaffInsurance,Long> {
+@Service
+public class TempStaffInsuranceServiceImpl implements TempStaffInsuranceService<TempStaffInsurance, Long> {
 
     @Autowired
     TempStaffInsuranceRepository tempStaffInsuranceRepository;
 
     @Override
     public List<TempStaffInsurance> findAll() {
-        return null;
+        return tempStaffInsuranceRepository.findAll();
     }
 
     @Override
