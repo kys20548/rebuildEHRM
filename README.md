@@ -20,6 +20,8 @@ _將之前開發的小程式改寫成spring boot_
 * json fastjson號稱最快
 * thymeleaf 取代JSP
 
-## 轉寫風格
+## 撰寫風格
+
 _盡量使用lambda方式撰寫_
+
 _時間處理用 java8的新API_
